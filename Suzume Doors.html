@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suzume — Open the Doors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Noto+Serif+JP:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/suzume.css">
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+
+    <!-- ——— TITLE ——— -->
+    <section class="screen on" id="screen-title" data-screen-label="Title">
+      <div class="bg" style="background-image:url('assets/bg-twilight.png');"></div>
+      <div class="vignette"></div>
+      <div class="inner">
+        <div class="titlecard fade-in">
+          <svg class="mascot" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 26 L17 9 L27 19 Q32 17 37 19 L47 9 L44 26 Q50 33 48 42 Q46 54 32 56 Q18 54 16 42 Q14 33 20 26 Z" fill="#f4f2ec"></path><circle cx="26" cy="34" r="2.6" fill="#243038"></circle><circle cx="38" cy="34" r="2.6" fill="#243038"></circle><path d="M29 41 Q32 44 35 41" stroke="#243038" stroke-width="1.6" fill="none"></path></svg>
+          <div class="kicker">Open the doors</div>
+          <h1 class="big">Suzume</h1>
+          <div class="jp">すずめの戸締まり</div>
+          <p style="font-size:26px;font-style:italic;color:var(--ink-dim);max-width:640px;line-height:1.6;">
+            Five sealed doors stand across a ruined land, and beyond each one
+            waits the Ever-After. Pass the gate's trial, and open them — one by one.
+          </p>
+          <div class="actions">
+            <button class="btn primary" id="btn-start">Begin the journey</button>
+            <button class="btn" id="btn-continue" style="display:none;">Continue</button>
+          </div>
+          <div class="actions" style="margin-top:0;">
+            <button class="btn ghost" id="btn-video">Watch the door scene</button>
+            <button class="btn ghost" id="btn-sound2">Sound On</button>
+          </div>
+        </div>
+      </div>
+      <div class="title-foot">Inspired by Makoto Shinkai’s “Suzume no Tojimari”</div>
+    </section>
+
+    <!-- ——— LEVEL ——— -->
+    <section class="screen" id="screen-level" data-screen-label="Level">
+      <div class="bg" id="level-bg"></div>
+      <div class="ever-stars" id="ever-stars"></div>
+      <div class="vignette"></div>
+
+      <div class="hud">
+        <div class="left">
+          <div class="hud-loc" id="hud-loc">Gate 1</div>
+          <div class="hud-jp" id="hud-jp"></div>
+          <div class="charms" id="charms"></div>
+        </div>
+        <div class="right">
+          <button class="iconbtn" id="btn-sound">Sound On</button>
+          <button class="iconbtn" id="btn-quit">Title</button>
+        </div>
+      </div>
+
+      <div class="door-hotspot" id="door-hotspot" style="display:none;">
+        <div class="door-aura"></div>
+        <div class="door-edge"></div>
+        <div class="door-hint">Open this door</div>
+      </div>
+
+      <div id="door-anim">
+        <div class="da-rays"></div>
+        <div class="da-light"></div>
+        <div class="da-frame">
+          <div class="da-portal">
+            <div class="sky"></div>
+            <div class="tint"></div>
+            <div class="twinkle"></div>
+            <div class="twinkle t2"></div>
+          </div>
+          <div class="da-sparks"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="da-leaf">
+            <span class="pane p1"></span>
+            <span class="pane p2"></span>
+            <span class="pane p3"></span>
+            <span class="pane p4"></span>
+            <div class="da-knob"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="level-card" style="display:none;"></div>
+
+      <div id="mg-overlay">
+        <div id="mg-panel">
+          <div id="mg-head">
+            <div id="mg-title"></div>
+            <div id="mg-stat"></div>
+          </div>
+          <div id="mg-body"></div>
+          <div id="mg-instr"></div>
+        </div>
+      </div>
+
+      <div class="fail-tint" id="fail-tint"></div>
+      <div id="lock-flash"></div>
+      <div id="lock-stamp">
+        <div class="big">Door Opened</div>
+        <div class="jp">開門</div>
+      </div>
+
+      <div class="progress-doors" id="progress"></div>
+    </section>
+
+    <!-- ——— VICTORY ——— -->
+    <section class="screen" id="screen-victory" data-screen-label="Victory">
+      <div class="bg" style="background-image:url('assets/bg-mountain.png');filter:saturate(1.1);"></div>
+      <div class="vignette"></div>
+      <div class="inner">
+        <div class="victory-shell rise">
+          <div class="kicker" id="victory-kicker">All five doors are sealed</div>
+          <h1 class="big" id="victory-headline" style="font-size:72px;">The morning comes</h1>
+          <p class="quote" id="victory-quote" style="max-width:900px;">“No matter how long the night, dawn will come.<br>We will meet again.”</p>
+          <div class="victory-stats" id="victory-stats"></div>
+          <p class="victory-copy" id="victory-copy">The Ever-After is quiet again, and every door you touched now rests in peace.</p>
+          <div class="videoframe"><video id="victory-vid" playsinline controls></video></div>
+          <div class="actions" style="display:flex;gap:24px;">
+            <button class="btn primary" id="btn-again">Open them again</button>
+            <button class="btn ghost" id="btn-title">Return to title</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— VIDEO MODAL ——— -->
+    <div id="video-modal">
+      <div class="videoframe"><video id="modal-vid" playsinline controls></video></div>
+      <button class="btn ghost" id="btn-close-video">Close</button>
+    </div>
+
+    <!-- ——— CUTSCENE ——— -->
+    <div id="cutscene">
+      <div class="cs-frame"><video id="cs-vid" playsinline></video></div>
+      <div class="cs-bar">
+        <div class="cs-cap" id="cs-cap"></div>
+        <button class="btn primary" id="cs-skip">Enter the gate ›</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="js/audio.js"></script>
+<script src="js/minigames.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
